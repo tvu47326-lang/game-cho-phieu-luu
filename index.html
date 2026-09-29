@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chợ Phiêu Lưu</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="game-shell">
+      <header class="topbar">
+        <div class="brand">
+          <span class="brand-mark">◆</span>
+          <div>
+            <p class="eyebrow">NHẬT KÝ THƯƠNG NHÂN</p>
+            <h1>Chợ Phiêu Lưu</h1>
+          </div>
+        </div>
+        <div class="topbar-actions"><button class="sound-toggle" id="soundToggle" aria-label="Bật âm thanh">♪ <span>Âm thanh</span></button><div class="day-chip"><span>Ngày</span><strong id="day">1</strong><small id="dateLabel">Tháng 1 · 2026</small></div></div>
+      </header>
+
+      <section class="hero-panel">
+        <div class="hero-copy">
+          <span class="location-tag">BẾN SÔNG SÀI GÒN</span>
+          <h2>Mua thấp, bán cao.<br /><em>Đi xa để giàu.</em></h2>
+          <p>Gom hàng từ những khu chợ nhỏ và trở thành thương nhân giàu nhất vùng.</p>
+          <button class="primary-button" id="nextDayButton">▣ Chốt sổ hôm nay</button>
+        </div>
+        <div class="market-illustration" aria-hidden="true">
+          <div class="sun"></div><div class="cloud cloud-one"></div><div class="cloud cloud-two"></div>
+          <div class="hill hill-back"></div><div class="hill hill-front"></div>
+          <div class="boat"><span></span></div><div class="dock"></div>
+        </div>
+      </section>
+
+      <section class="day-flow" aria-label="Vòng lặp trong ngày">
+        <div class="flow-heading"><div><p class="section-kicker">NHỊP NGÀY HÔM NAY</p><h3 id="phaseTitle">Phiên chợ đang mở</h3></div><span class="flow-objective" id="dailyObjective">Mua nguyên liệu để bắt đầu.</span></div>
+        <div class="flow-steps">
+          <div class="flow-step active" data-step="buy"><b>01</b><span>Chuẩn bị kho</span></div>
+          <div class="flow-line"></div>
+          <div class="flow-step" data-step="serve"><b>02</b><span>Nấu & phục vụ</span></div>
+          <div class="flow-line"></div>
+          <div class="flow-step" data-step="incident"><b>03</b><span>Xử lý sự cố</span></div>
+          <div class="flow-line"></div>
+          <div class="flow-step" data-step="close"><b>04</b><span>Chốt sổ</span></div>
+        </div>
+      </section>
+
+      <section class="stat-grid" aria-label="Chỉ số tài chính">
+        <article class="stat-card"><span class="stat-icon coin">₫</span><div><p>Ví tiền</p><strong id="money">12.500</strong><small>₫</small></div></article>
+        <article class="stat-card"><span class="stat-icon bag">▰</span><div><p>Hàng trong kho</p><strong id="stock">0</strong><small>/ 18 ô</small></div></article>
+        <article class="stat-card"><span class="stat-icon chart">↗</span><div><p>Tổng tài sản</p><strong id="netWorth">12.500</strong><small>₫</small></div></article>
+        <article class="stat-card"><span class="stat-icon rating">★</span><div><p>Đánh giá quán</p><strong id="rating">5.0</strong><small>/ 5</small></div></article>
+      </section>
+
+      <div class="content-grid">
+        <section class="market-section">
+          <div class="section-heading"><div><p class="section-kicker">PHIÊN CHỢ HÔM NAY</p><h3>Giá hàng hóa</h3></div><span class="market-status"><i></i> Đang mở cửa</span></div>
+          <div class="goods-grid" id="goodsGrid"></div>
+          <section class="panel kitchen-panel">
+            <div class="section-heading compact"><div><p class="section-kicker">GIAN BẾP NHỎ</p><h3>Nấu món cho khách</h3><span class="kitchen-mode" id="kitchenMode">Bạn tự tay nấu</span></div><span id="mealCount">0 món</span></div>
+            <div class="recipe-grid" id="recipeGrid"></div>
+            <div class="recipe-pagination" id="recipePagination" aria-label="Trang món ăn"></div>
+          </section>
+        </section>
+        <aside class="side-column">
+          <section class="panel event-panel"><div class="section-heading compact"><div><p class="section-kicker">TIN TRONG NGÀY</p><h3 id="eventTitle">Sáng bình yên</h3></div><span id="eventIcon">☀</span></div><div class="season-info" id="seasonInfo">☀ Mùa hè · Nước mát bán chạy hơn</div><p id="eventDescription" class="event-description">Một ngày thuận lợi để bắt đầu buôn bán.</p><div class="incident-strip is-hidden" id="dayIncident"><strong>⚠ SỰ CỐ ĐANG XẢY RA</strong><span id="incidentText"></span></div></section>
+          <section class="panel customer-panel"><div class="section-heading compact"><div><p class="section-kicker">KHÁCH GHÉ QUÁN</p><h3>Đơn đang chờ</h3></div><span id="customerCount">0 khách</span></div><div id="customerList" class="customer-list"></div></section>
+          <section class="panel staff-live-panel"><div class="section-heading compact"><div><p class="section-kicker">ĐỘI NGŨ HÔM NAY</p><h3>Nhân viên đang làm</h3></div><span id="liveStaffCount">0 người</span></div><div id="liveStaffList" class="live-staff-list"></div></section>
+          <section class="panel inventory-panel"><div class="section-heading compact"><div><p class="section-kicker">TÚI HÀNG</p><h3>Kho của bạn</h3></div><span id="inventoryCount">0 / 18</span></div><div id="inventoryList" class="inventory-list"></div></section>
+          <section class="panel log-panel"><div class="section-heading compact"><div><p class="section-kicker">SỔ GIAO DỊCH</p><h3>Hoạt động gần đây</h3></div></div><div id="activityLog" class="activity-log"></div></section>
+        </aside>
+      </div>
+      <section class="developer-credit">
+        <div class="credit-label">DEVELOPER'S NOTE</div>
+        <div class="credit-content">
+          <div>
+            <p class="section-kicker">A GAME BY ONE DEVELOPER</p>
+            <h2>Chợ Phiêu Lưu</h2>
+            <p class="credit-author">Created by <strong>Vu Thanh Tuan</strong> · <strong>Developed in 2026</strong></p>
+          </div>
+          <div class="credit-copy">
+            <p>Hello everyone! I am Vu Thanh Tuan, the sole developer of Chợ Phiêu Lưu. I built this game from the ground up, including its changing daily economy, customer relationships, cooking system and shop management.</p>
+            <p>My hope is to give you the feeling of building something from nothing: buying wisely, keeping customers happy, paying your expenses and slowly growing a small riverside shop into a successful business.</p>
+            <p>Thank you for playing, for being patient with the early bugs, and for giving me the chance to prove myself. <strong>Thank you all so, so much!</strong></p>
+          </div>
+        </div>
+      </section>
+      <footer><span>CHỢ PHIÊU LƯU</span><span>Phiên bản 1.2 · Mục tiêu: đạt 25.000₫</span></footer>
+    </main>
+    <section class="report-modal is-hidden" id="dayReport" aria-live="polite">
+      <div class="report-card">
+        <div class="report-header"><div><p class="section-kicker">SỔ CÁI CUỐI NGÀY</p><h2 id="reportTitle">Báo cáo ngày 1</h2></div><span class="report-stamp">ĐÃ CHỐT</span></div>
+        <div class="report-summary">
+          <div><span>Doanh thu</span><strong id="reportRevenue">0₫</strong></div>
+          <div><span>Chi phí hàng</span><strong id="reportPurchases">0₫</strong></div>
+          <div><span>Lương nhân viên</span><strong id="reportWages">0₫</strong></div>
+          <div class="profit-cell"><span>Lãi / lỗ hôm nay</span><strong id="reportProfit">0₫</strong></div>
+        </div>
+        <p class="report-note" id="reportNote"></p>
+        <div class="staff-heading"><div><p class="section-kicker">ĐỘI NGŨ CỦA BẠN</p><h3>Tuyển người để quán chạy tốt hơn</h3></div><span id="staffCount">0 người</span></div>
+        <div class="staff-grid" id="staffGrid"></div>
+        <button class="primary-button report-next" id="startNextDayButton">Bắt đầu ngày mới →</button>
+      </div>
+    </section>
+    <section class="review-modal is-hidden" id="reviewModal" aria-live="polite">
+      <div class="review-card">
+        <p class="section-kicker">PHẢN HỒI KHÁCH HÀNG</p>
+        <div class="review-face" id="reviewFace">🙂</div>
+        <h2 id="reviewTitle">Khách đã nhận món</h2>
+        <div class="review-stars" id="reviewStars">★★★★★</div>
+        <p class="review-message" id="reviewMessage"></p>
+        <p class="review-meta" id="reviewMeta"></p>
+        <button class="primary-button" id="closeReviewButton">Đã hiểu</button>
+      </div>
+    </section>
+    <style>
+      .rating { background:#f8e5b5; color:#c58d26; }
+      .customer-row.urgent { background:#fff3eb; margin:0 -8px; padding-left:8px; padding-right:8px; }
+      .wait-time { color:#2f7770; font-size:10px; }
+      .urgent .wait-time { color:#cb614e; font-weight:700; }
+      .stat-grid { grid-template-columns:repeat(4,1fr); }
+      .is-hidden { display:none !important; }
+      .report-modal { position:fixed; z-index:10; inset:0; display:grid; place-items:center; padding:24px; background:#20353299; }
+      .report-card { width:min(760px,100%); max-height:92vh; overflow:auto; padding:30px; background:#fffdf8; border:1px solid #e6e0d5; box-shadow:0 18px 60px #20353233; }
+      .report-header,.staff-heading { display:flex; justify-content:space-between; align-items:flex-start; gap:20px; }
+      .report-header h2 { margin:6px 0 0; font:700 32px/1.1 'Playfair Display',serif; }
+      .report-stamp { padding:7px 9px; color:#2f7770; border:1px solid #a9cdc1; font-size:10px; font-weight:700; letter-spacing:1px; }
+      .report-summary { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; margin:26px 0 14px; background:#e6e0d5; border:1px solid #e6e0d5; }
+      .report-summary div { display:flex; flex-direction:column; gap:7px; padding:15px 12px; background:#f7f3eb; }.report-summary span { color:#71807b; font-size:10px; }.report-summary strong { font-size:16px; }.profit-cell { background:#dcebe5 !important; }.profit-positive { color:#2f7770; }.profit-negative { color:#c06e63; }.report-note { margin:0 0 27px; color:#71807b; font-size:12px; }.staff-heading { align-items:end; margin-bottom:12px; }.staff-heading h3 { margin:5px 0 0; font:600 21px 'Playfair Display',serif; }.staff-grid { display:grid; gap:8px; }.staff-card { display:flex; align-items:center; gap:12px; padding:12px; border:1px solid #e6e0d5; }.staff-icon { display:grid; place-items:center; width:40px; height:40px; flex-shrink:0; background:#f3e4cc; border-radius:50%; font-size:21px; }.staff-info { flex:1; }.staff-info h4 { margin:0 0 3px; font-size:13px; }.staff-info h4 small { color:#2f7770; }.staff-info p,.staff-info span { display:block; margin:0; color:#71807b; font-size:10px; line-height:1.4; }.hire-button { min-width:83px; border:1px solid #a9cdc1; background:transparent; color:#245a56; padding:7px; font-size:10px; font-weight:700; }.hire-button:hover:not(:disabled) { background:#2f7770; color:#fff; }.hire-button:disabled { border-color:#e6e0d5; color:#b6b0a5; cursor:not-allowed; }.hire-button small { font-size:9px; }.report-next { display:block; margin:24px 0 0 auto; }
+      @media (max-width:800px) { .stat-grid { grid-template-columns:repeat(2,1fr); }.report-card { padding:20px; }.report-summary { grid-template-columns:repeat(2,1fr); } }
+      .review-modal { position:fixed; z-index:12; inset:0; display:grid; place-items:center; padding:24px; background:#20353299; }.review-card { width:min(390px,100%); padding:30px; text-align:center; background:#fffdf8; border:1px solid #e6e0d5; box-shadow:0 18px 60px #20353233; }.review-face { display:grid; place-items:center; width:62px; height:62px; margin:16px auto 12px; background:#f3e4cc; border-radius:50%; font-size:32px; }.review-card h2 { margin:0; font:700 25px 'Playfair Display',serif; }.review-stars { margin:12px 0 8px; color:#d49b2f; font-size:24px; letter-spacing:3px; }.review-message { min-height:45px; margin:0; color:#445752; font-size:14px; line-height:1.5; }.review-meta { margin:16px 0 20px; color:#71807b; font-size:11px; }.review-card .primary-button { margin-top:0; }.kitchen-mode { display:block; margin-top:4px; color:#71807b; font-size:10px; font-weight:400; }.incident-strip { display:flex; flex-direction:column; gap:4px; margin-top:14px; padding:10px; background:#fff0e7; border-left:3px solid #de8051; color:#9a5845; font-size:10px; line-height:1.4; }.incident-strip strong { font-size:9px; letter-spacing:1px; }.incident-order { border-left:3px solid #de8051; padding-left:8px; background:#fff7f0; }.incident-label { margin-left:5px; color:#cb614e; font-size:8px; letter-spacing:1px; }
+    </style>
+    <style>
+      :root { --ink:#192c2b; --muted:#71817c; --cream:#e9eee8; --paper:#fffdf7; --line:#d9e1d9; --teal:#176b66; --teal-dark:#0d4d4a; --orange:#db7048; --gold:#d6a337; }
+      body { background-color:#e9eee8; background-image:linear-gradient(135deg,#e9eee8 0%,#f5f1e7 48%,#e6efea 100%); }
+      body:before { content:''; position:fixed; z-index:-1; inset:0; opacity:.28; background-image:radial-gradient(#176b6618 1px,transparent 1px); background-size:18px 18px; pointer-events:none; }
+      .game-shell { position:relative; }
+      .topbar { position:relative; padding:4px 0 18px; }
+      .topbar:after { content:'BẾN CẢNG 07'; position:absolute; right:0; bottom:0; color:#9aa9a0; font-size:9px; letter-spacing:3px; }
+      .brand-mark { color:var(--orange); text-shadow:7px 3px 0 #d6a33744; }
+      .brand h1 { color:var(--teal-dark); letter-spacing:.2px; }
+      .day-chip { background:#fffdf799; border:1px solid #fff; border-left:3px solid var(--orange); padding:9px 13px 9px 15px; box-shadow:0 5px 18px #24483b12; }
+      .hero-panel { min-height:330px; border:1px solid #c8ddd3; box-shadow:0 16px 35px #24483b1c; background:linear-gradient(112deg,#dcece5 0%,#d6eae6 55%,#c3ddd3 100%); }
+      .hero-panel:after { content:'TRADE • COOK • GROW'; position:absolute; right:30px; top:24px; color:#176b6655; font-size:9px; font-weight:700; letter-spacing:3px; }
+      .hero-copy h2 { color:#173a37; text-shadow:0 2px 0 #ffffff66; }
+      .hero-copy h2 em { color:var(--orange); }
+      .primary-button { background:var(--orange); box-shadow:0 5px 0 #a94f32,0 8px 18px #a94f3230; }.primary-button:hover { background:#c9623e; box-shadow:0 3px 0 #a94f32,0 7px 14px #a94f3230; }
+      .stat-grid { gap:12px; }.stat-card { position:relative; overflow:hidden; border:0; box-shadow:0 8px 20px #24483b12; transition:transform .2s,box-shadow .2s; }.stat-card:after { content:''; position:absolute; width:70px; height:70px; right:-28px; bottom:-28px; border:10px solid #176b6610; border-radius:50%; }.stat-card:hover { transform:translateY(-4px); box-shadow:0 12px 24px #24483b1c; }.stat-card strong { color:var(--teal-dark); }
+      .section-heading h3 { color:var(--teal-dark); }.market-status { padding:7px 10px; border:1px solid #a8cec1; background:#e2f0e8; }
+      .good-card { border:0; border-left:4px solid transparent; box-shadow:0 7px 16px #24483b0d; }.good-card:hover { border-left-color:var(--orange); box-shadow:0 10px 22px #24483b1b; }.good-art { box-shadow:inset 0 0 0 5px #ffffff66; }
+      .panel { border:0; box-shadow:0 8px 20px #24483b10; }.event-panel { background:linear-gradient(135deg,#edf6e8,#e2efe2); box-shadow:inset 4px 0 0 #6aaa7e,0 8px 20px #24483b10; }.kitchen-panel { background:#fffaf0; box-shadow:inset 4px 0 0 #d6a337,0 8px 20px #24483b10; }.customer-panel { box-shadow:inset 4px 0 0 #db7048,0 8px 20px #24483b10; }
+      .recipe-card { transition:background .2s,transform .2s; }.recipe-card:hover { background:#fff4df; transform:translateX(4px); }.cook-button,.serve-button { border-color:#8dbdae; }.cook-button:hover:not(:disabled),.serve-button:hover:not(:disabled) { background:var(--teal); box-shadow:0 3px 0 var(--teal-dark); }
+      .incident-strip { animation:incidentPulse 1.8s ease-in-out infinite; }.incident-order { box-shadow:inset 3px 0 0 var(--orange); }
+      .activity-log { scrollbar-color:#a8c7bc transparent; }.activity { transition:background .2s; }.activity:hover { background:#f2f7f1; }
+      .report-card,.review-card { border-top:5px solid var(--orange); box-shadow:0 22px 70px #173a3740; }.report-stamp { background:#e2f0e8; }.staff-card { background:#fffdf7; transition:transform .2s,box-shadow .2s; }.staff-card:hover { transform:translateX(4px); box-shadow:0 5px 14px #24483b14; }
+      @keyframes incidentPulse { 0%,100% { box-shadow:inset 0 0 0 #de805100; } 50% { box-shadow:inset 0 0 0 2px #de805155; } }
+      @media (max-width:800px) { .topbar:after { display:none; }.hero-panel:after { right:15px; font-size:8px; }.hero-copy h2 { text-shadow:none; }.stat-card { min-height:75px; } }
+    </style>
+    <style>
+      .good-art img { width:100%; height:100%; object-fit:contain; border-radius:50%; }
+      .recipe-art img { width:100%; height:100%; object-fit:contain; border-radius:50%; }
+      .mini-art img { width:100%; height:100%; object-fit:contain; border-radius:50%; }
+    </style>
+    <style>
+      .recipe-rating { display:block; margin-top:4px; color:#c58d26; font-size:10px; font-weight:600; }
+      .cook-progress { height:4px; margin-top:6px; overflow:hidden; background:#e6e0d5; border-radius:4px; }.cook-progress span { display:block; height:100%; background:#db7048; transition:width .4s linear; }.prep-label { display:block; margin-top:3px; color:#71817c; font-size:9px; }
+      .staff-live-panel { box-shadow:inset 4px 0 0 #176b66,0 8px 20px #24483b10; }.live-staff-list { display:grid; gap:8px; }.live-staff-card { display:flex; align-items:center; gap:9px; padding:8px 0; border-top:1px solid #d9e1d9; }.live-staff-card:first-child { border-top:0; }.live-staff-card img { width:38px; height:38px; flex-shrink:0; border-radius:50%; }.live-staff-info { display:flex; min-width:0; flex:1; flex-direction:column; gap:2px; }.live-staff-info strong { font-size:11px; }.live-staff-info span { color:#176b66; font-size:10px; }.live-staff-info small { color:#cb614e; font-size:9px; line-height:1.35; }.live-staff-card.left,.live-staff-card.off { opacity:.62; }.staff-actions { display:flex; flex-direction:column; gap:3px; }.staff-action { border:1px solid #a8cec1; background:transparent; padding:5px 6px; color:#176b66; font-size:8px; font-weight:700; }.staff-action:hover { background:#176b66; color:#fff; }.staff-action.deny { border-color:#e5c3b8; color:#b25d48; }
+      .staff-icon-image { width:40px; height:40px; flex-shrink:0; border-radius:50%; }
+      .recipe-pagination { display:flex; justify-content:center; align-items:center; gap:5px; margin-top:14px; }.page-number,.page-arrow { min-width:26px; height:26px; border:1px solid #d9e1d9; background:#fffdf7; color:#71817c; font-size:10px; }.page-number:hover,.page-arrow:hover:not(:disabled),.page-number.active { border-color:#176b66; background:#176b66; color:#fff; }.page-arrow:disabled { opacity:.35; cursor:not-allowed; }
+      .developer-credit { display:grid; grid-template-columns:155px 1fr; gap:28px; margin-top:45px; padding:26px 30px; background:#173a37; color:#edf5ec; box-shadow:0 14px 30px #24483b24; }.credit-label { color:#f3c96a; font-size:10px; font-weight:700; letter-spacing:2px; writing-mode:vertical-rl; transform:rotate(180deg); }.credit-content { display:grid; grid-template-columns:minmax(180px,.8fr) minmax(0,1.5fr); gap:30px; }.developer-credit .section-kicker { color:#9ac7b0; }.developer-credit h2 { margin:7px 0 8px; color:#fffdf7; font:700 32px 'Playfair Display',serif; }.credit-author { margin:0; color:#b6ccc1; font-size:11px; }.credit-copy { color:#c9d9d0; font-size:12px; line-height:1.6; }.credit-copy p { margin:0 0 9px; }.credit-copy p:last-child { margin-bottom:0; }.credit-copy strong { color:#f3c96a; } 
+      @media (max-width:800px) { .developer-credit { grid-template-columns:1fr; gap:15px; padding:22px; }.credit-label { writing-mode:horizontal-tb; transform:none; }.credit-content { grid-template-columns:1fr; gap:15px; }.developer-credit h2 { font-size:27px; } }
+    </style>
+    <style>
+      .day-flow { margin:18px 0 4px; padding:18px 22px; background:#fffdf799; border:1px solid #ffffff; box-shadow:0 8px 20px #24483b0d; }.flow-heading { display:flex; align-items:end; justify-content:space-between; gap:20px; }.flow-heading h3 { margin:5px 0 0; color:#0d4d4a; font:600 22px 'Playfair Display',serif; }.flow-objective { max-width:330px; color:#71817c; font-size:11px; text-align:right; }.flow-steps { display:flex; align-items:center; margin-top:18px; }.flow-step { display:flex; align-items:center; gap:7px; color:#9aa9a0; font-size:10px; white-space:nowrap; }.flow-step b { display:grid; place-items:center; width:25px; height:25px; border:1px solid #cbd9d1; border-radius:50%; font-size:9px; }.flow-step.active { color:#db7048; font-weight:700; }.flow-step.active b { color:#fff; border-color:#db7048; background:#db7048; box-shadow:0 3px 0 #a94f32; }.flow-step.done { color:#176b66; }.flow-step.done b { color:#fff; border-color:#176b66; background:#176b66; }.flow-line { height:1px; flex:1; min-width:24px; margin:0 9px; background:#d9e1d9; }.flow-line:has(+ .flow-step.done) { background:#8ab7aa; }
+      @media (max-width:800px) { .day-flow { padding:15px; }.flow-heading { display:block; }.flow-objective { display:block; margin-top:8px; max-width:none; text-align:left; }.flow-steps { align-items:flex-start; }.flow-step { flex-direction:column; gap:4px; text-align:center; }.flow-step span { max-width:65px; white-space:normal; line-height:1.25; }.flow-line { margin-top:12px; min-width:8px; } }
+    </style>
+    <script src="game.js"></script>
+    <style>
+      .developer-credit { position:relative; overflow:hidden; border:1px solid #d6a337; border-left:7px solid #f3c96a; background:linear-gradient(120deg,#0d4d4a,#173a37 62%,#245a56); box-shadow:0 18px 38px #173a3740; }
+      .developer-credit:after { content:'✦'; position:absolute; right:30px; top:15px; color:#f3c96a; opacity:.35; font-size:70px; }
+      .credit-label { color:#f3c96a; font-size:11px; letter-spacing:3px; font-weight:800; }
+      .developer-credit h2 { font-size:40px; text-shadow:0 3px 0 #0d4d4a; }
+      .credit-author { color:#e0eee5; font-size:13px; }.credit-author strong { color:#f3c96a; font-weight:800; }
+      .credit-copy { color:#e0eee5; }.credit-copy strong { color:#f3c96a; }
+      @media (max-width:800px) { .developer-credit h2 { font-size:32px; }.developer-credit:after { right:12px; font-size:48px; } }
+      .season-info { margin:0 0 8px; padding:7px 9px; color:#a15f2e; background:#fff2d3; border-left:3px solid #d6a337; font-size:10px; }.season-tag { display:inline-block; margin-top:4px; color:#176b66; font-size:9px; font-weight:700; }.locked-recipe { opacity:.68; }.locked-recipe .recipe-art { filter:grayscale(.35); }.locked-recipe .cook-button { border-color:#d6a337; color:#9a6b20; }.locked-recipe .cook-button:hover:not(:disabled) { background:#d6a337; color:#fff; }
+      .topbar-actions { display:flex; align-items:center; gap:12px; }.sound-toggle { border:1px solid #a8cec1; background:#fffdf799; color:#176b66; padding:8px 11px; font-size:10px; font-weight:700; }.sound-toggle:hover,.sound-toggle.on { background:#176b66; color:#fff; }.sound-toggle span { margin-left:3px; } 
+      @media (max-width:800px) { .sound-toggle span { display:none; }.topbar-actions { gap:7px; } }
+    </style>
+  </body>
+</html>
